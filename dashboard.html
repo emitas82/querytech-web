@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inversiones | QueryTECH</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* DISEÑO BASE E INTERFAZ PROFESIONAL */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: #020617; 
+            font-family: 'Poppins', sans-serif; 
+            color: #f8fafc; 
+            overflow-x: hidden;
+        }
+
+        /* CAPAS DE SEGURIDAD */
+        #view-loading { height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; background: #020617; }
+        #view-authenticated { display: none; padding: 20px; }
+
+        /* HEADER & LOGO */
+        .dashboard-header {
+            max-width: 1400px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #1e293b;
+        }
+        .logo-container img {
+            height: 50px;
+            filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3));
+        }
+
+        /* KPI CARDS */
+        .kpi-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto 40px auto;
+        }
+        .kpi-card {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #0ea5e9;
+        }
+        .kpi-label { color: #94a3b8; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .kpi-value { font-size: 28px; font-weight: 700; margin-top: 5px; color: #f8fafc; }
+
+        /* TABLA DE INVERSIONES - ESTILO TERMINAL */
+        .table-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #0f172a;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            padding: 30px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .section-title { font-size: 24px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .section-title i { color: #0ea5e9; }
+
+        table { width: 100%; border-collapse: collapse; font-family: 'Poppins', sans-serif; }
+        th { text-align: left; padding: 15px; color: #94a3b8; font-size: 12px; text-transform: uppercase; border-bottom: 2px solid #1e293b; }
+        td { padding: 18px 15px; border-bottom: 1px solid #1e293b; font-size: 14px; transition: all 0.3s ease; }
+        
+        /* Celdas dinámicas */
+        .price-cell { font-family: 'Roboto Mono', monospace; font-weight: 700; color: #f8fafc; }
+        .change-cell { font-weight: 700; }
+        .val-cell { font-weight: 700; color: #38bdf8; }
+
+        .up { color: #22c55e; }
+        .down { color: #ef4444; }
+
+        /* Efecto de parpadeo cuando el precio cambia */
+        @keyframes flash-green { from { background: rgba(34, 197, 94, 0.2); } to { background: transparent; } }
+        @keyframes flash-red { from { background: rgba(239, 68, 68, 0.2); } to { background: transparent; } }
+        .updated-up { animation: flash-green 1s ease-out; }
+        .updated-down { animation: flash-red 1s ease-out; }
+
+        /* BOTONES */
+        .btn-logout { background: transparent; color: #94a3b8; border: 1px solid #334155; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .btn-logout:hover { background: #ef4444; color: white; border-color: #ef4444; }
+    </style>
+</head>
+<body>
+
+    <div id="view-loading">
+        <div style="width: 50px; height: 50px; border: 5px solid #1e293b; border-top-color: #0ea5e9; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        <p style="letter-spacing: 2px; font-size: 14px;">AUTORIZANDO ACCESO QUERYTECH...</p>
+    </div>
+
+    <div id="view-authenticated">
+        
+        <header class="dashboard-header">
+            <div class="logo-container">
+                <img src="/img/logo-querytech.png" alt="QueryTECH Logo">
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="text-align: right;">
+                    <div style="font-size: 12px; color: #64748b;">Panel Privado</div>
+                    <div id="user-email" style="font-weight: 600; color: #0ea5e9;"></div>
+                </div>
+                <button class="btn-logout" onclick="window.client.logout({logoutParams:{returnTo:'https://querytech.com.ar/'}})">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="kpi-container">
+            <div class="kpi-card">
+                <div class="kpi-label">Cartera Total (ARS)</div>
+                <div class="kpi-value" id="total-cartera">$ 0</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Variación General</div>
+                <div class="kpi-value up" id="total-change">+0.00%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Activos Activos</div>
+                <div class="kpi-value">11</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Market Status</div>
+                <div class="kpi-value" style="color: #22c55e;">● ABIERTO</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Estatus de Inversiones</h2>
+            <table id="investments-table">
+                <thead>
+                    <tr>
+                        <th>Activo</th>
+                        <th>Tipo</th>
+                        <th>Inv</th>
+                        <th>Broker</th>
+                        <th>Cantidad</th>
+                        <th>Último Precio</th>
+                        <th>Variación</th>
+                        <th>Valorizado (ARS)</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.18/auth0-spa-js.production.js"></script>
+    
+    <script>
+        // DATOS INICIALES BASADOS EN LA IMAGEN
+        const initialData = [
+            { ticker: 'AAPL', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 74, price: 22000, change: -1.74 },
+            { ticker: 'AMZN', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 1420, price: 16500, change: 2.10 },
+            { ticker: 'DIA', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 26, price: 35000, change: 0.85 },
+            { ticker: 'GOLD', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 54, price: 12500, change: -0.40 },
+            { ticker: 'LOMA', tipo: 'ACCION', inv: 'F', broker: 'IOL', qty: 277, price: 3150, change: -2.85 },
+            { ticker: 'MELI', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 81, price: 19800, change: 1.30 },
+            { ticker: 'META', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 26, price: 37500, change: -0.74 },
+            { ticker: 'MSFT', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 129, price: 20800, change: 0.60 },
+            { ticker: 'NU', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 263, price: 9200, change: 1.20 },
+            { ticker: 'WMT', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 74, price: 11500, change: 1.10 },
+            { ticker: 'XLE', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 12, price: 45000, change: 1.50 }
+        ];
+
+        // LOGICA DE RENDERIZADO Y ACTUALIZACION
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            let totalGeneral = 0;
+
+            initialData.forEach((item) => {
+                const valorizado = item.qty * item.price;
+                totalGeneral += valorizado;
+                
+                const row = document.createElement('tr');
+                row.id = `row-${item.ticker}`;
+                row.innerHTML = `
+                    <td style="font-weight: 700;">${item.ticker}</td>
+                    <td style="color: #64748b;">${item.tipo}</td>
+                    <td>${item.inv}</td>
+                    <td>${item.broker}</td>
+                    <td>${item.qty.toLocaleString()}</td>
+                    <td class="price-cell">$ ${item.price.toLocaleString()}</td>
+                    <td class="change-cell ${item.change >= 0 ? 'up' : 'down'}">${item.change >= 0 ? '+' : ''}${item.change.toFixed(2)}%</td>
+                    <td class="val-cell">$ ${valorizado.toLocaleString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('total-cartera').innerText = `$ ${totalGeneral.toLocaleString()}`;
+        }
+
+        // Simulación de fluctuación de mercado
+        function simulateMarket() {
+            let currentTotal = 0;
+            
+            initialData.forEach(item => {
+                const fluctuation = (Math.random() - 0.5) * 50; 
+                const oldPrice = item.price;
+                
+                // Actualizar valores
+                item.price = Math.round(item.price + fluctuation);
+                item.change = item.change + (Math.random() - 0.5) * 0.1;
+                
+                const valorizado = item.qty * item.price;
+                currentTotal += valorizado;
+
+                // Actualizar interfaz
+                const cell = document.querySelector(`#row-${item.ticker} .price-cell`);
+                if(cell) {
+                    cell.innerText = `$ ${item.price.toLocaleString()}`;
+                    cell.className = item.price > oldPrice ? 'price-cell updated-up' : 'price-cell updated-down';
+                    
+                    const valCell = document.querySelector(`#row-${item.ticker} .val-cell`);
+                    valCell.innerText = `$ ${valorizado.toLocaleString()}`;
+                    
+                    const changeCell = document.querySelector(`#row-${item.ticker} .change-cell`);
+                    changeCell.innerText = `${item.change >= 0 ? '+' : ''}${item.change.toFixed(2)}%`;
+                    changeCell.className = `change-cell ${item.change >= 0 ? 'up' : 'down'}`;
+                }
+            });
+            
+            document.getElementById('total-cartera').innerText = `$ ${currentTotal.toLocaleString()}`;
+        }
+
+        // INTEGRACION AUTH0
+        (async () => {
+            try {
+                window.client = await auth0.createAuth0Client({
+                    domain: 'dev-fe0qtxoxfoluapbs.us.auth0.com',
+                    clientId: 'vZj4AjcJW4kyWDBGCB2dH61ZGbr2z3Cr',
+                    authorizationParams: { redirect_uri: 'https://querytech.com.ar/dashboard.html' },
+                });
+
+                if (location.search.includes("code=") && location.search.includes("state=")) {
+                    await window.client.handleRedirectCallback();
+                    history.replaceState({}, "", location.pathname);
+                }
+
+                if (await window.client.isAuthenticated()) {
+                    const user = await window.client.getUser();
+                    document.getElementById("user-email").textContent = user.email;
+                    
+                    document.getElementById("view-loading").style.display = "none";
+                    document.getElementById("view-authenticated").style.display = "block";
+                    
+                    renderTable();
+                    setInterval(simulateMarket, 4000); 
+                } else {
+                    await window.client.loginWithRedirect();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        })();
+    </script>
+    <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+</body>
+</html>

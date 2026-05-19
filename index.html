@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueryTECH | IA & Predictive Data Partner</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="data-cluster-container"></div>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">
+                <img src="img/logo-querytech.png" alt="QueryTECH" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#soluciones">Soluciones</a></li>
+                <li><a href="#impacto">Impacto</a></li>
+                <li><a href="mailto:info@querytech.com.ar" class="btn-nav">Contáctanos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge-new">Tu Partner de IA & Datos</span>
+                <h1>Transformamos datos con <br><span class="gradient-text">Inteligencia Artificial</span></h1>
+                <p>Expertos en optimizar la retención y el éxito operativo mediante Machine Learning y arquitecturas modernas en Azure.</p>
+                <div class="hero-btns">
+                    <a href="#soluciones" class="btn-main">Conocer las soluciones</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="impacto" class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon-wrapper"><i class="fas fa-university fa-fw stat-icon"></i></div>
+                    <strong>+15</strong> 
+                    <span>Instituciones confían en nosotros</span>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon-wrapper"><i class="fas fa-brain fa-fw stat-icon"></i></div>
+                    <strong>+20</strong> 
+                    <span>Modelos Predictivos que anticipan tendencias</span>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon-wrapper"><i class="fas fa-cloud fa-fw stat-icon"></i></div>
+                    <strong>Multi-Cloud</strong> 
+                    <span>Arquitectura escalable en AZURE y AWS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="soluciones" class="solutions">
+        <div class="container">
+            <div class="section-tag">Nuestras Soluciones</div>
+            <h2>IA diseñada para el impacto real</h2>
+            <div class="sol-grid">
+                <div class="sol-card">
+                    <div class="tech-icon funnel-icon"></div>
+                    <h3>Agente Comercial Inteligente</h3>
+                    <p>Potenciamos tu funnel comercial. Nuestra IA prioriza leads con mayor probabilidad real de inscripción.</p>
+                </div>
+                <div class="sol-card">
+                    <div class="tech-icon trend-icon"></div>
+                    <h3>Predictor de Permanencia</h3>
+                    <p>Machine Learning que identifica scores de riesgo de deserción temprana antes de que sucedan.</p>
+                </div>
+                <div class="sol-card">
+                    <div class="tech-icon stack-icon"></div>
+                    <h3>Arquitectura de Datos</h3>
+                    <p>Ingeniería escalable en Azure. Implementamos Medallion Architecture y procesos Delta Load.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="nosotros" class="main-footer">
+        <div class="container">
+            <h2>¿Listo para transformar tu gestión con IA?</h2>
+            <a href="mailto:info@querytech.com.ar" class="btn-footer">Hablar con un experto</a>
+            <div class="footer-bottom">
+                <p>© 2026 QueryTECH. Buenos Aires, Argentina.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("data-cluster-container", {
+            "particles": {
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#0078D4" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.4, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#0078D4",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": { "enable": true, "speed": 1.2, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "resize": true },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } } }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
