@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QueryTECH | IA & Predictive Data Partner</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* VARIABLES DE TEMA */
+        /* VARIABLES INTERNAS */
         :root {
             --bg-topbar: #f1f5f9;
             --border-theme: #e2e8f0;
             --text-theme-muted: #64748b;
             --text-theme-main: #0f172a;
+            --card-surface: rgba(255, 255, 255, 0.7);
+            --card-shadow: rgba(0, 120, 212, 0.04);
+            --neon-glow: rgba(0, 120, 212, 0.15);
         }
 
         body.dark-theme {
@@ -27,9 +30,12 @@
             --border-theme: #141b2b;
             --text-theme-muted: #94a3b8;
             --text-theme-main: #f8fafc;
+            --card-surface: rgba(11, 17, 33, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.4);
+            --neon-glow: rgba(56, 189, 248, 0.2);
         }
 
-        /* CAMBIOS VISUALES MODO OSCURO */
+        /* CONFIGURACIÓN GLOBAL DE MODO OSCURO */
         body.dark-theme {
             background-color: var(--white);
             color: var(--dark);
@@ -50,20 +56,12 @@
             border-top-color: var(--border-theme);
             border-bottom-color: var(--border-theme);
         }
-        body.dark-theme .sol-card {
-            background: rgba(17, 24, 39, 0.8);
-            border-color: #1f2937;
-        }
-        body.dark-theme .sol-card h3 {
-            color: #f8fafc;
-        }
         
-        /* SOLUCIÓN LOGO INVISIBLE */
         body.dark-theme .logo-img {
             filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
         }
 
-        /* BARRA SUPERIOR STATUS */
+        /* BARRA SUPERIOR */
         .top-status-bar {
             width: 100%;
             background-color: var(--bg-topbar);
@@ -113,75 +111,124 @@
             border-color: var(--text-theme-main);
         }
 
-        /* GRILLA ADAPTABLE PARA 4 COLUMNAS DE COMPETENCIA */
-        .sol-grid {
+        /* SECCIÓN DE SOLUCIONES COMPLETAMENTE REDISEÑADA (ESTILO PRÓXIMA GENERACIÓN) */
+        .solutions-modern {
+            padding: 140px 0;
+            position: relative;
+            z-index: 2;
+        }
+        .modern-section-header {
+            max-width: 700px;
+            margin-bottom: 5rem;
+        }
+        .modern-section-header h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            color: var(--text-theme-main);
+            margin-top: 0.5rem;
+        }
+
+        /* ARQUITECTURA DE LA NUEVA GRILLA BENTO */
+        .sol-modern-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(12, 1fr);
             gap: 2rem;
-            margin-top: 3rem;
         }
-        .sol-card {
-            transition: all 0.3s ease;
+
+        /* TARJETA BASE REVOLUCIONARIA */
+        .sol-modern-card {
+            background: var(--card-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-theme);
+            border-radius: 24px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px var(--card-shadow);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
         }
-        .sol-card .icon-box-new {
-            width: 48px;
-            height: 48px;
+
+        /* ASIGNACIÓN DE ANCHOS ASIMÉTRICOS (ESTILO INTERACTIVO) */
+        .card-wide-1 { grid-column: span 7; }
+        .card-narrow-1 { grid-column: span 5; }
+        .card-narrow-2 { grid-column: span 5; }
+        .card-wide-2 { grid-column: span 7; }
+
+        .sol-modern-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--brand);
+            box-shadow: 0 20px 50px var(--neon-glow);
+        }
+
+        /* ICONOS DE SÚPER ALTA TECNOLOGÍA */
+        .sol-modern-icon {
+            width: 56px;
+            height: 56px;
             background: rgba(0, 120, 212, 0.06);
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #0078D4;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(0, 120, 212, 0.1);
             transition: all 0.3s ease;
         }
-        body.dark-theme .sol-card .icon-box-new {
-            background: rgba(56, 189, 248, 0.1);
+        body.dark-theme .sol-modern-icon {
+            background: rgba(56, 189, 248, 0.08);
             color: #38BDF8;
+            border-color: rgba(56, 189, 248, 0.15);
         }
-        .sol-card:hover .icon-box-new {
-            background: #0078D4;
+        .sol-modern-card:hover .sol-modern-icon {
+            background: var(--brand);
             color: #ffffff;
+            transform: scale(1.05);
         }
-        body.dark-theme .sol-card:hover .icon-box-new {
-            background: #38BDF8;
+        body.dark-theme .sol-modern-card:hover .sol-modern-icon {
             color: #070B14;
         }
 
-        /* INTERFAZ DE SELECTOR DE IDIOMA */
-        .lang-selector {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
+        .sol-modern-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-theme-main);
+            margin-bottom: 1rem;
         }
-        .lang-option {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            color: var(--text-theme-muted);
-            transition: color 0.2s, opacity 0.2s;
-            opacity: 0.6;
-            text-decoration: none;
+        .sol-modern-card p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-muted);
         }
-        .lang-option:hover, .lang-option.active {
-            opacity: 1;
-            color: var(--brand);
+
+        /* EFECTO DE LÍNEAS DE FLUJO DE DATOS TRAS LAS TARJETAS */
+        .sol-modern-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 120, 212, 0.02) 100%);
+            pointer-events: none;
         }
-        .flag-icon {
-            width: 18px;
-            height: 14px;
-            border-radius: 2px;
-            object-fit: cover;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-        }
-        .lang-divider {
-            color: var(--border-theme);
-            font-weight: 300;
+
+        /* MULTILENGUAJE */
+        .lang-selector { display: flex; align-items: center; gap: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 600; }
+        .lang-option { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-theme-muted); transition: color 0.2s, opacity 0.2s; opacity: 0.6; text-decoration: none; }
+        .lang-option:hover, .lang-option.active { opacity: 1; color: var(--brand); }
+        .flag-icon { width: 18px; height: 14px; border-radius: 2px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+        .lang-divider { color: var(--border-theme); font-weight: 300; }
+
+        /* RESPONSIVE DESIGN INTELIGENTE */
+        @media (max-width: 992px) {
+            .card-wide-1, .card-narrow-1, .card-narrow-2, .card-wide-2 { grid-column: span 12; }
+            .modern-section-header h2 { font-size: 2.5rem; }
+            .sol-modern-card { padding: 2.5rem; }
         }
     </style>
 </head>
@@ -268,34 +315,44 @@
         </div>
     </section>
 
-    <section id="soluciones" class="solutions">
+    <section id="soluciones" class="solutions-modern">
         <div class="container">
-            <div class="section-tag" data-tr="sol-tag">Nuestras Soluciones</div>
-            <h2 id="sol-main-title">IA y Arquitectura Core para el Impacto Real</h2>
+            <div class="modern-section-header">
+                <div class="section-tag" data-tr="sol-tag" style="margin-bottom: 1rem;">Nuestras Soluciones</div>
+                <h2 id="sol-main-title">Ecosistemas Core estructurados para el impacto real</h2>
+            </div>
             
-            <div class="sol-grid">
-                <div class="sol-card">
-                    <div class="icon-box-new"><i class="fa-solid fa-chart-pie"></i></div>
-                    <h3 data-tr="card1-t">Data Analytics & BI</h3>
-                    <p data-tr="card1-d">Modelamos e integramos analítica avanzada y dashboards inteligentes adaptados al negocio. Convertimos datos complejos en conocimiento accionable y reportes automatizados en tiempo real para acelerar la toma de decisiones estratégicas.</p>
+            <div class="sol-modern-grid">
+                <div class="sol-modern-card card-wide-1">
+                    <div>
+                        <div class="sol-modern-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                        <h3 data-tr="card1-t">Data Analytics & BI</h3>
+                        <p data-tr="card1-d">Modelamos e integramos analítica avanzada y dashboards inteligentes adaptados al negocio. Convertimos datos complejos en conocimiento accionable y reportes automatizados en tiempo real para acelerar la toma de decisiones estratégicas.</p>
+                    </div>
                 </div>
 
-                <div class="sol-card">
-                    <div class="icon-box-new"><i class="fa-solid fa-database"></i></div>
-                    <h3 data-tr="card2-t">Data Engineering</h3>
-                    <p data-tr="card2-d">Diseñamos e implementamos arquitecturas invisibles pero robustas de Modern Data Warehouse y Data Lakehouse bajo Medallion Architecture (Bronze, Silver, Gold). Estructuramos pipelines automáticos optimizados para cargas masivas Delta Loads.</p>
+                <div class="sol-modern-card card-narrow-1">
+                    <div>
+                        <div class="sol-modern-icon"><i class="fa-solid fa-database"></i></div>
+                        <h3 data-tr="card2-t">Data Engineering</h3>
+                        <p data-tr="card2-d">Diseñamos e implementamos arquitecturas invisibles pero robustas de Modern Data Warehouse y Data Lakehouse bajo Medallion Architecture (Bronze, Silver, Gold). Estructuramos pipelines automáticos optimizados para cargas masivas Delta Loads.</p>
+                    </div>
                 </div>
 
-                <div class="sol-card">
-                    <div class="icon-box-new"><i class="fa-solid fa-brain"></i></div>
-                    <h3 data-tr="card3-t">Data Science</h3>
-                    <p data-tr="card3-d">Desarrollamos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a generar ventajas competitivas sostenibles. Especialistas en scoring predictivo para retención estudiantil, prevención de bajas y optimización comercial.</p>
+                <div class="sol-modern-card card-narrow-2">
+                    <div>
+                        <div class="sol-modern-icon"><i class="fa-solid fa-brain"></i></div>
+                        <h3 data-tr="card3-t">Data Science</h3>
+                        <p data-tr="card3-d">Desarrollamos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a generar ventajas competitivas sostenibles. Especialistas en scoring predictivo para retención estudiantil, prevención de bajas y optimización comercial.</p>
+                    </div>
                 </div>
 
-                <div class="sol-card">
-                    <div class="icon-box-new"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h3 data-tr="card4-t">Data Governance</h3>
-                    <p data-tr="card4-d">Establecemos marcos sólidos de gobernanza para convertir la información en un activo estratégico confiable, auditable y seguro. Creamos catálogos de metadatos, linaje de datos y políticas de seguridad/control de acceso.</p>
+                <div class="sol-modern-card card-wide-2">
+                    <div>
+                        <div class="sol-modern-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h3 data-tr="card4-t">Data Governance</h3>
+                        <p data-tr="card4-d">Establecemos marcos sólidos de gobernanza para convertir la información en un activo estratégico confiable, auditable y seguro. Creamos catálogos de metadatos, linaje de datos y políticas de seguridad/control de acceso.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -315,7 +372,6 @@
     <script>
         let pJS_instance = null;
 
-        // DICCIONARIO INTERNO DE TRADUCCIÓN DIRECTA
         const translations = {
             es: {
                 "nav-sol": "Soluciones", "nav-imp": "Impacto", "nav-btn": "Contáctanos",
@@ -324,7 +380,7 @@
                 "hero-desc": "Expertos en optimizar la retención académica y el éxito operativo mediante Machine Learning y arquitecturas modernas en Azure.",
                 "hero-btn": "Conocer las soluciones",
                 "stat-1": "Instituciones confían en nosotros", "stat-2": "Modelos Predictivos desarrollados", "stat-3": "Arquitectura escalable en Azure y AWS",
-                "sol-tag": "Nuestras Soluciones", "sol-main-title": "IA y Arquitectura Core para el Impacto Real",
+                "sol-tag": "Nuestras Soluciones", "sol-main-title": "Ecosistemas Core estructurados para el impacto real",
                 "card1-t": "Data Analytics & BI", "card1-d": "Modelamos e integramos analítica avanzada y dashboards inteligentes adaptados al negocio. Convertimos datos complejos en conocimiento accionable y reportes automatizados en tiempo real para acelerar la toma de decisiones estratégicas.",
                 "card2-t": "Data Engineering", "card2-d": "Diseñamos e implementamos arquitecturas invisibles pero robustas de Modern Data Warehouse y Data Lakehouse bajo Medallion Architecture (Bronze, Silver, Gold). Estructuramos pipelines automáticos optimizados para cargas masivas Delta Loads.",
                 "card3-t": "Data Science", "card3-d": "Desarrollamos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a generar ventajas competitivas sostenibles. Especialistas en scoring predictivo para retención estudiantil, prevención de bajas y optimización comercial.",
@@ -332,13 +388,13 @@
                 "foot-title": "¿Listo para transformar tu gestión con IA?", "foot-btn": "Hablar con un experto"
             },
             en: {
-                "nav-sol": "Solutions", "nav-imp": "Impacto", "nav-btn": "Contact Us",
+                "nav-sol": "Solutions", "nav-imp": "Impact", "nav-btn": "Contact Us",
                 "hero-badge": "Your AI & Data Partner",
                 "hero-title": "We transform data with <br><span class='gradient-text'>Artificial Intelligence</span>",
                 "hero-desc": "Experts in optimizing academic retention and operational success through Machine Learning and modern Azure architectures.",
                 "hero-btn": "Explore Solutions",
                 "stat-1": "Institutions trust us", "stat-2": "Predictive Models developed", "stat-3": "Scalable architecture on Azure and AWS",
-                "sol-tag": "Our Solutions", "sol-main-title": "AI & Core Architecture for Real Impact",
+                "sol-tag": "Our Solutions", "sol-main-title": "Core Ecosystems structured for real impact",
                 "card1-t": "Data Analytics & BI", "card1-d": "We model and integrate advanced analytics and intelligent business dashboards. We turn complex data into actionable insights and real-time automated reporting to accelerate strategic decision-making.",
                 "card2-t": "Data Engineering", "card2-d": "We design and deploy robust, invisible architectures for Modern Data Warehouses and Data Lakehouses using Medallion Architecture (Bronze, Silver, Gold). We build automated pipelines optimized for large-scale Delta Loads.",
                 "card3-t": "Data Science", "card3-d": "We develop Machine Learning, Deep Learning, and Generative AI algorithms aimed at building sustainable competitive advantages. Specialists in predictive scoring for student retention and sales funnels.",
@@ -351,31 +407,28 @@
                 "hero-title": "Transformamos dados com <br><span class='gradient-text'>Inteligência Artificial</span>",
                 "hero-desc": "Especialistas em otimizar a retenção acadêmica e o sucesso operacional por meio de Machine Learning e arquiteturas modernas no Azure.",
                 "hero-btn": "Conhecer Soluções",
-                "stat-1": "Instituições confiam em nós", "stat-2": "Modelos Preditivos desenvolvidos", "stat-3": "Arquitetura escalável no Azure e AWS",
-                "sol-tag": "Nossas Soluções", "sol-main-title": "IA e Arquitetura Core para Impacto Real",
+                "stat-1": "Instituicões confiam em nós", "stat-2": "Modelos Preditivos desenvolvidos", "stat-3": "Arquitetura escalável no Azure e AWS",
+                "sol-tag": "Nossas Soluções", "sol-main-title": "Ecossistemas Core estruturados para impacto real",
                 "card1-t": "Data Analytics & BI", "card1-d": "Modelamos e integramos análise avançada e painéis inteligentes adaptados ao negócio. Convertemos dados complexos em insights acionáveis e relatórios automatizados em tempo real para acelerar decisões estratégicas.",
                 "card2-t": "Data Engineering", "card2-d": "Projetamos e implementamos arquiteturas robustas e invisíveis de Modern Data Warehouse e Data Lakehouse sob Medallion Architecture (Bronze, Silver, Gold). Estruturamos pipelines automáticos otimizados para cargas Delta Loads.",
                 "card3-t": "Data Science", "card3-d": "Desenvolvemos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a criar vantagens competitivas sustentáveis. Especialistas em score preditivo para retenção de estudantes e funis comerciais.",
-                "card4-t": "Data Governance", "card4-d": "Estabelecemos estruturas sólidas de governança para transformar a informação em um ativo estratégico confiável, auditável e seguro. Criamos catálogos de metadados, linhagem de dados e controle de acesso.",
-                "foot-title": "Pronto para transformar sua gestão con IA?", "foot-btn": "Fale com un especialista"
+                "card4-t": "Data Governance", "card4-d": "Estabelecemos estruturas sólidas de governança para transformar a informação em um ativo estratégico confiável, auditável e seguro. Criamos catálogos de metadatos, linhagem de dados e controle de acesso.",
+                "foot-title": "Pronto para transformar sua gestão com IA?", "foot-btn": "Fale com um especialista"
             }
         };
 
         function changeLang(lang, event) {
             if(event) event.preventDefault();
             
-            // Alternar estado activo visual en el menú
             document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
             const target = event ? event.currentTarget : document.querySelector(`.lang-option[onclick*="${lang}"]`);
             if(target) target.classList.add('active');
 
-            // Traducir los nodos marcados
             document.querySelectorAll('[data-tr]').forEach(element => {
                 const key = element.getAttribute('data-tr');
                 if(translations[lang][key]) element.innerText = translations[lang][key];
             });
 
-            // Tratamientos especiales para h1/p por estructura interna html
             document.getElementById('hero-title').innerHTML = translations[lang]['hero-title'];
             document.getElementById('hero-desc').innerText = translations[lang]['hero-desc'];
             document.getElementById('sol-main-title').innerText = translations[lang]['sol-main-title'];
@@ -430,7 +483,6 @@
             return document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${months[now.getMonth()]} ${now.getFullYear()}`;
         }
 
-        // Inicialización
         initParticles("#0078D4", "radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%)");
         updateClock();
         setInterval(updateClock, 1000);
