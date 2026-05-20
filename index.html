@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QueryTECH | IA & Predictive Data Partner</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -358,10 +358,46 @@
         </div>
     </section>
 
+    <section id="stack" class="stack-section">
+        <div class="container">
+            <div class="section-tag">Infraestructura</div>
+            <h2>Nuestra Infraestructura Tecnológica</h2>
+            
+            <div class="tech-stack-container">
+                <div class="tech-category-card">
+                    <h3>Cloud Providers</h3>
+                    <div class="tech-icons-row">
+                        <div class="tech-pill-item"><i class="fa-brands fa-microsoft color-azure"></i> <span>Azure</span></div>
+                        <div class="tech-pill-item"><i class="fa-brands fa-aws color-aws"></i> <span>AWS</span></div>
+                        <div class="tech-pill-item"><i class="fa-brands fa-google color-gcp"></i> <span>GCP</span></div>
+                    </div>
+                </div>
+
+                <div class="tech-category-card">
+                    <h3>Data Engineering</h3>
+                    <div class="tech-icons-row">
+                        <div class="tech-pill-item"><i class="fa-solid fa-database color-databricks"></i> <span>Databricks</span></div>
+                        <div class="tech-pill-item"><i class="fa-solid fa-cubes color-fabric"></i> <span>Microsoft Fabric</span></div>
+                        <div class="tech-pill-item"><i class="fa-solid fa-gears color-adf"></i> <span>Azure Data Factory</span></div>
+                    </div>
+                </div>
+
+                <div class="tech-category-card">
+                    <h3>Database & Analytics</h3>
+                    <div class="tech-icons-row">
+                        <div class="tech-pill-item"><i class="fa-solid fa-table color-oracle"></i> <span>Oracle SQL & PL/SQL</span></div>
+                        <div class="tech-pill-item"><i class="fa-solid fa-server color-sqlserver"></i> <span>SQL Server</span></div>
+                        <div class="tech-pill-item"><i class="fa-solid fa-chart-simple color-powerbi"></i> <span>Power BI</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer id="nosotros" class="main-footer">
         <div class="container">
             <h2 data-tr="foot-title">¿Listo para transformar tu gestión con IA?</h2>
-            <a href="mailto:info@querytech.com.ar" class="btn-footer" data-tr="foot-btn">Hablar con un experto</a>
+            <a href="mailto:info@querytech.com.ar" class="btn-footer" data-tr="foot-btn">Hablar con un expert</a>
             <div class="footer-bottom">
                 <p>© 2026 QueryTECH. Buenos Aires, Argentina.</p>
             </div>
@@ -404,12 +440,12 @@
             pt: {
                 "nav-sol": "Soluções", "nav-imp": "Impacto", "nav-btn": "Contate-nos",
                 "hero-badge": "Seu Parceiro de IA & Dados",
-                "hero-title": "Transformamos dados com <br><span class='gradient-text'>Inteligência Artificial</span>",
+                "hero-title": "Transformamos datos com <br><span class='gradient-text'>Inteligência Artificial</span>",
                 "hero-desc": "Especialistas em otimizar a retenção acadêmica e o sucesso operacional por meio de Machine Learning e arquiteturas modernas no Azure.",
                 "hero-btn": "Conhecer Soluções",
                 "stat-1": "Instituicões confiam em nós", "stat-2": "Modelos Preditivos desenvolvidos", "stat-3": "Arquitetura escalável no Azure e AWS",
-                "sol-tag": "Nossas Soluções", "sol-main-title": "Ecossistemas Core estruturados para impacto real",
-                "card1-t": "Data Analytics & BI", "card1-d": "Modelamos e integramos análise avançada e painéis inteligentes adaptados ao negócio. Convertemos dados complexos em insights acionáveis e relatórios automatizados em tempo real para acelerar decisões estratégicas.",
+                "sol-tag": "Nuestras Soluções", "sol-main-title": "Ecossistemas Core estruturados para impacto real",
+                "card1-t": "Data Analytics & BI", "card1-d": "Modelamos e integramos análise avançada y painéis inteligentes adaptados ao negócio. Convertemos dados complexos em insights acionáveis e relatórios automatizados em tempo real para acelerar decisões estratégicas.",
                 "card2-t": "Data Engineering", "card2-d": "Projetamos e implementamos arquiteturas robustas e invisíveis de Modern Data Warehouse e Data Lakehouse sob Medallion Architecture (Bronze, Silver, Gold). Estruturamos pipelines automáticos otimizados para cargas Delta Loads.",
                 "card3-t": "Data Science", "card3-d": "Desenvolvemos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a criar vantagens competitivas sustentáveis. Especialistas em score preditivo para retenção de estudantes e funis comerciais.",
                 "card4-t": "Data Governance", "card4-d": "Estabelecemos estruturas sólidas de governança para transformar a informação em um ativo estratégico confiável, auditável e seguro. Criamos catálogos de metadatos, linhagem de dados e controle de acesso.",
@@ -450,8 +486,7 @@
                 },
                 "interactivity": {
                     "detect_on": "canvas",
-                    "events": { "onhover": { "enable": true, "mode": "grab" }, "resize": true },
-                    "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } } }
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "resize": true }
                 },
                 "retina_detect": true
             });
@@ -480,7 +515,7 @@
             const timeStr = now.toLocaleTimeString('es-AR', { hour12: false });
             const day = now.getDate();
             const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-            return document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${months[now.getMonth()]} ${now.getFullYear()}`;
+            document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${months[now.getMonth()]} ${now.getFullYear()}`;
         }
 
         initParticles("#0078D4", "radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%)");

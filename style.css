@@ -1,5 +1,5 @@
 /* ==========================================================================
-   style.css - Consolidado de Estilo Premium QueryTECH
+   style.css - Consolidado de Estilo Premium QueryTECH con Infraestructura
    ========================================================================== */
 
 :root {
@@ -8,6 +8,10 @@
     --dark: #0f172a;
     --text-muted: #64748b;
     --white: #ffffff;
+    --bg-gradient-start: #ffffff;
+    --bg-gradient-end: #f1f5f9;
+    --navbar-bg: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(0, 0, 0, 0.05);
 }
 
 body.dark-theme {
@@ -16,6 +20,10 @@ body.dark-theme {
     --dark: #f8fafc;
     --text-muted: #94a3b8;
     --white: #070B14;
+    --bg-gradient-start: #070B14;
+    --bg-gradient-end: #04070d;
+    --navbar-bg: rgba(7, 11, 20, 0.7);
+    --border-color: rgba(255, 255, 255, 0.05);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,94 +33,80 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark); backgro
 .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
 /* NAVBAR */
-.navbar { padding: 1rem 0; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05); }
-body.dark-theme .navbar { background: rgba(7, 11, 20, 0.8); border-bottom-color: rgba(255,255,255,0.05); }
+.navbar { padding: 1rem 0; background: var(--navbar-bg); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); transition: background 0.3s, border-color 0.3s; }
 .navbar .container { display: flex; justify-content: space-between; align-items: center; }
 .logo-img { height: 38px; }
 body.dark-theme .logo-img { filter: brightness(0) invert(1); }
 .nav-links { display: flex; list-style: none; gap: 2.5rem; align-items: center; }
 .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; }
-.btn-nav { background: var(--dark); color: var(--white) !important; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; }
+.btn-nav { background: var(--dark); color: var(--white) !important; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
 
 /* HERO DESIGN */
 .hero { padding: 150px 0 100px; text-align: center; position: relative; z-index: 2; }
-.badge-new { background: #e0f2fe; color: #0078D4; padding: 8px 18px; border-radius: 100px; font-size: 0.85rem; font-weight: 800; display: inline-block; margin-bottom: 2rem; }
+.badge-new { background: rgba(0,120,212,0.06); color: #0078D4; padding: 8px 18px; border-radius: 100px; font-size: 0.85rem; font-weight: 800; display: inline-block; margin-bottom: 2rem; border: 1px solid rgba(0,120,212,0.1); }
 .hero h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.15; letter-spacing: -2px; margin-bottom: 2rem; color: var(--dark); }
 .gradient-text { background: linear-gradient(135deg, #0078D4, #38BDF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .hero p { font-size: 1.45rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 3rem; font-weight: 500; }
-
-.hero-btns { display: flex; gap: 1.5rem; justify-content: center; align-items: center; }
-.btn-main, .btn-secondary { display: inline-block; width: 220px; text-align: center; padding: 1.1rem 0; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; font-size: 1.05rem; }
-.btn-main { background: #0078D4; color: white; box-shadow: 0 10px 25px rgba(0, 120, 212, 0.25); }
+.btn-main { display: inline-block; width: 220px; text-align: center; padding: 1.1rem 0; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; font-size: 1.05rem; background: #0078D4; color: white; box-shadow: 0 10px 25px rgba(0, 120, 212, 0.25); }
 .btn-main:hover { transform: translateY(-3px); }
 
-.btn-secondary { background: transparent; border: 2px solid #cbd5e1; color: var(--dark); }
-.btn-secondary:hover { transform: translateY(-3px); border-color: var(--brand); color: var(--brand); }
-
-/* 5 KPIs HORIZONTALES UNIFICADOS */
-.stats { padding: 50px 0; background: rgba(255,255,255,0.6); backdrop-filter: blur(5px); border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); position: relative; z-index: 2; }
-body.dark-theme .stats { background: rgba(11, 17, 33, 0.6); border-color: rgba(255,255,255,0.05); }
-.stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); text-align: center; gap: 1rem; width: 100%; }
+/* STATS / IMPACTO */
+.stats { padding: 50px 0; background: rgba(255,255,255,0.6); backdrop-filter: blur(5px); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); position: relative; z-index: 2; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 2rem; width: 100%; }
 .stat-item { display: flex; flex-direction: column; align-items: center; }
-.kpi-num { display: block; font-family: 'Roboto Mono', monospace; font-size: 2.7rem; color: var(--brand); font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
-.stat-item span { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-top: 0.4rem; }
-.stat-icon-wrapper { background: rgba(0, 120, 212, 0.06); width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; }
-.stat-icon { font-size: 1.15rem; color: var(--brand); }
+.stat-item strong { display: block; font-size: 2.7rem; color: var(--brand); font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
+.stat-item span { font-size: 1.05rem; font-weight: 600; color: var(--text-muted); margin-top: 0.4rem; }
+.stat-icon-wrapper { background: rgba(0, 120, 212, 0.06); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.8rem; color: var(--brand); font-size: 1.3rem; }
 
 /* SECCIÓN SOLUCIONES BENTO ASIMÉTRICA */
 .solutions-modern { padding: 120px 0 80px; position: relative; z-index: 2; }
 .modern-section-header { text-align: center; margin-bottom: 4rem; }
 .section-tag { font-family: 'Roboto Mono', monospace; color: var(--brand); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; }
 .modern-section-header h2 { font-size: 2.6rem; font-weight: 800; letter-spacing: -1px; color: var(--dark); }
-
 .sol-modern-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; width: 100%; }
 .card-wide-1, .card-wide-2 { grid-column: span 7; }
 .card-narrow-1, .card-narrow-2 { grid-column: span 5; }
-
-.sol-modern-card { background: rgba(255, 255, 255, 0.8); padding: 3rem; border-radius: 24px; border: 1px solid #eef2f6; backdrop-filter: blur(12px); transition: 0.4s; }
-body.dark-theme .sol-modern-card { background: rgba(15, 23, 42, 0.6); border-color: rgba(255, 255, 255, 0.05); }
-.sol-modern-card:hover { transform: translateY(-5px); border-color: var(--brand); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04); }
-
+.sol-modern-card { background: var(--card-surface); padding: 3rem; border-radius: 24px; border: 1px solid var(--border-theme); backdrop-filter: blur(12px); transition: 0.4s; }
+.sol-modern-card:hover { transform: translateY(-5px); border-color: var(--brand); box-shadow: 0 20px 40px var(--neon-glow); }
 .sol-modern-icon { width: 52px; height: 52px; background: rgba(0, 120, 212, 0.06); border: 1px solid rgba(0, 120, 212, 0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: #0078D4; font-size: 1.4rem; }
-.sol-modern-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; color: var(--dark); }
+.sol-modern-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-theme-main); }
 .sol-modern-card p { font-size: 0.98rem; color: var(--text-muted); line-height: 1.6; }
 
-/* CASOS DE ÉXITO TARJETAS PREMIUM */
-.results-section { padding: 100px 0; position: relative; z-index: 2; }
-.results-section h2 { text-align: center; font-size: 2.6rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 4rem; color: var(--dark); }
-.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; width: 100%; }
-.result-card { background: rgba(255, 255, 255, 0.85); padding: 3rem 2.5rem; border-radius: 24px; border: 1px solid #eef2f6; backdrop-filter: blur(12px); transition: 0.4s; min-height: 220px; display: flex; flex-direction: column; justify-content: center; }
-body.dark-theme .result-card { background: rgba(15, 23, 42, 0.55); border-color: rgba(255, 255, 255, 0.04); }
-.result-card:hover { border-color: var(--brand); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 120, 212, 0.08); }
-.result-accent-num { font-family: 'Roboto Mono', monospace; font-size: 3.2rem; font-weight: 800; color: #0078D4; letter-spacing: -2px; margin-bottom: 0.8rem; }
-body.dark-theme .result-accent-num { color: #38BDF8; }
-.result-badge-icon { width: 50px; height: 50px; background: rgba(0, 120, 212, 0.06); border: 1px solid rgba(0, 120, 212, 0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: #0078D4; font-size: 1.3rem; }
-.result-card p { font-size: 1.05rem; color: var(--text-muted); font-weight: 500; line-height: 1.55; }
-
-/* STACK TECNOLÓGICO CIRCULAR */
-.stack-section { padding: 80px 0 120px; position: relative; z-index: 2; text-align: center; }
+/* INFRAESTRUCTURA - TECH STACK SHOWCASE CATEGORIZADO */
+.stack-section { padding: 100px 0 120px; position: relative; z-index: 2; text-align: center; }
 .stack-section h2 { font-size: 2.6rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 4rem; color: var(--dark); }
-.stack-grid-logos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; max-width: 1000px; margin: 0 auto; }
-.stack-item-logo { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-.logo-sphere { width: 90px; height: 90px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--brand); box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; transition: 0.4s; }
-body.dark-theme .logo-sphere { background: #0b1329; border-color: #141b2b; }
-.stack-item-logo span { font-size: 1rem; font-weight: 700; color: var(--text-muted); }
+.tech-stack-container { display: flex; flex-direction: column; gap: 1.5rem; max-width: 900px; margin: 0 auto; text-align: left; }
+.tech-category-card { background: var(--card-surface); border: 1px solid var(--border-theme); border-radius: 16px; padding: 1.8rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; backdrop-filter: blur(12px); transition: all 0.3s ease; }
+.tech-category-card:hover { transform: translateX(4px); border-color: var(--brand); }
+.tech-category-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-theme-main); min-width: 200px; }
+.tech-icons-row { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-end; flex-grow: 1; }
+.tech-pill-item { display: flex; align-items: center; gap: 0.6rem; background: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-theme); padding: 0.5rem 1.1rem; border-radius: 100px; font-size: 0.92rem; font-weight: 600; color: var(--text-theme-main); transition: all 0.2s ease; }
+body.dark-theme .tech-pill-item { background: rgba(255, 255, 255, 0.02); }
+.tech-pill-item:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 4px 12px var(--card-shadow); }
+
+/* COLORES DE MARCA LOGOS */
+.color-azure { color: #0078d4; }
+.color-aws { color: #ff9900; }
+.color-gcp { color: #ea4335; }
+.color-databricks { color: #ff3621; }
+.color-fabric { color: #f2c94c; }
+.color-adf { color: #0078d4; }
+.color-oracle { color: #ea2328; }
+.color-sqlserver { color: #cc292b; }
+.color-powerbi { color: #f2c94c; }
 
 /* FOOTER */
-.main-footer { padding: 100px 0 60px; background: #070B14; color: white; text-align: center; position: relative; z-index: 2; }
+.main-footer { padding: 100px 0 60px; background: #070B14; color: white; text-align: center; position: relative; z-index: 2; border-top: 1px solid var(--border-color); }
+.main-footer h2 { color: white; font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
 .btn-footer { background: white; color: #070B14; padding: 1.2rem 3rem; border-radius: 12px; text-decoration: none; font-weight: 800; display: inline-block; margin-top: 2rem; }
 .footer-bottom { margin-top: 4rem; opacity: 0.6; font-size: 0.9rem; }
 
-/* RESPONSIVE DESIGN */
-@media (max-width: 1100px) {
+/* RESPONSIVE */
+@media (max-width: 992px) {
     .sol-modern-grid { grid-template-columns: 1fr; }
     .card-wide-1, .card-wide-2, .card-narrow-1, .card-narrow-2 { grid-column: span 12; }
-    .stats-grid, .stack-grid-logos { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .tech-category-card { flex-direction: column; align-items: flex-start; padding: 1.5rem; gap: 1rem; }
+    .tech-icons-row { justify-content: flex-start; width: 100%; }
 }
-@media (max-width: 768px) {
-    .hero h1 { font-size: 2.8rem; }
-    .hero-btns { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
-    .btn-main, .btn-secondary { width: 100%; }
-    .nav-links { display: none; }
-    .stats-grid, .results-grid, .stack-grid-logos { grid-template-columns: 1fr; }
-}
+@media (max-width: 576px) { .nav-links { display: none; } }
