@@ -10,6 +10,15 @@
 </head>
 <body>
 
+    <div class="top-status-bar">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn">
+            <i class="fa-solid fa-moon"></i> DARK
+        </button>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <span id="live-clock" style="color: #0078D4; font-weight: 600;">UTC-3 --:--:-- -- --- ----</span>
+        </div>
+    </div>
+
     <div id="data-cluster-container"></div>
 
     <nav class="navbar">
@@ -20,7 +29,7 @@
             <ul class="nav-links">
                 <li><a href="#soluciones">Soluciones</a></li>
                 <li><a href="#impacto">Impacto</a></li>
-                <li><a href="mailto:info@querytech.com.ar" class="btn-nav">Contáctanos</a></li>
+                <li><a href="mailto:info@querytech.com.ar" class=\"btn-nav\">Contáctanos</a></li>
             </ul>
         </div>
     </nav>
@@ -28,65 +37,96 @@
     <header class="hero">
         <div class="container">
             <div class="hero-content">
-                <span class="badge-new">Tu Partner de IA & Datos</span>
-                <h1>Transformamos datos con <br><span class="gradient-text">Inteligencia Artificial</span></h1>
-                <p>Expertos en optimizar la retención y el éxito operativo mediante Machine Learning y arquitecturas modernas en Azure.</p>
-                <div class="hero-btns">
-                    <a href="#soluciones" class="btn-main">Conocer las soluciones</a>
+                <div class="badge">
+                    <i class="fa-solid fa-bolt"></i> Business Intelligence & Artificial Intelligence
+                </div>
+                <h1>Modelos predictivos que transforman la <span>retención académica</span></h1>
+                <p class="hero-desc">Impulsamos a las instituciones educativas con analítica avanzada de datos y arquitectura lakehouse para mitigar la deserción y optimizar la gestión institucional.</p>
+                <div class="hero-actions">
+                    <a href="mailto:info@querytech.com.ar" class="btn-primary">Iniciar Consultoría</a>
+                    <a href="#soluciones" class="btn-secondary">Explorar Soluciones <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="data-card-mock">
+                    <div class="card-header">
+                        <span class="card-title">Retención Estudiantil</span>
+                        <div class="card-icon"><i class="fa-solid fa-user-gradient"></i></div>
+                    </div>
+                    <div class="card-metrics">
+                        <div class="main-metric">94.2%</div>
+                        <div class="metric-change"><i class="fa-solid fa-arrow-trend-up"></i> +3.1% este período</div>
+                    </div>
+                    <div class="mock-chart">
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar"></div>
+                        <div class="chart-bar active"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <section id="impacto" class="stats">
+    <section id="soluciones" class="soluciones">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-icon-wrapper"><i class="fas fa-university fa-fw stat-icon"></i></div>
-                    <strong>+15</strong> 
-                    <span>Instituciones confían en nosotros</span>
+            <div class="section-header">
+                <h2>Soluciones de Datos de Extremo a Extremo</h2>
+                <p>Modernizamos infraestructuras complejas convirtiendo repositorios estáticos en ecosistemas inteligentes.</p>
+            </div>
+            <div class="grid-soluciones">
+                <div class="card-solucion">
+                    <div class="icon-box"><i class="fa-solid fa-database"></i></div>
+                    <h3>Migración y Modernización</h3>
+                    <p>Evolución de bases de datos tradicionales Oracle e infraestructuras locales hacia arquitecturas modernas e integraciones fluidas en la nube.</p>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-icon-wrapper"><i class="fas fa-brain fa-fw stat-icon"></i></div>
-                    <strong>+20</strong> 
-                    <span>Modelos Predictivos que anticipan tendencias</span>
+                <div class="card-solucion">
+                    <div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div>
+                    <h3>Modern BI & Analytics</h3>
+                    <p>Implementación integral de soluciones analíticas dinámicas y tableros interactivos avanzados diseñados a la medida de los flujos del sector de la educación superior.</p>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-icon-wrapper"><i class="fas fa-cloud fa-fw stat-icon"></i></div>
-                    <strong>Multi-Cloud</strong> 
-                    <span>Arquitectura escalable en AZURE y AWS</span>
+                <div class="card-solucion">
+                    <div class="icon-box"><i class="fa-solid fa-brain"></i></div>
+                    <h3>Modelos Predictivos IA</h3>
+                    <p>Desarrollo especializado de detectores de riesgo y algoritmos de Machine Learning enfocados en anticipar comportamientos y optimizar procesos críticos.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="soluciones" class="solutions">
+    <section id="impacto" class="impacto">
         <div class="container">
-            <div class="section-tag">Nuestras Soluciones</div>
-            <h2>IA diseñada para el impacto real</h2>
-            <div class="sol-grid">
-                <div class="sol-card">
-                    <div class="tech-icon funnel-icon"></div>
-                    <h3>Agente Comercial Inteligente</h3>
-                    <p>Potenciamos tu funnel comercial. Nuestra IA prioriza leads con mayor probabilidad real de inscripción.</p>
+            <div class="grid-impacto">
+                <div class="kpi-item">
+                    <h4>+160</h4>
+                    <p>Procesos ETL Automatizados</p>
+                    <span>Flujos de datos eficientes</span>
                 </div>
-                <div class="sol-card">
-                    <div class="tech-icon trend-icon"></div>
-                    <h3>Predictor de Permanencia</h3>
-                    <p>Machine Learning que identifica scores de riesgo de deserción temprana antes de que sucedan.</p>
+                <div class="kpi-item">
+                    <h4>15%</h4>
+                    <p>Reducción de Deserción</p>
+                    <span>Impacto directo medible</span>
                 </div>
-                <div class="sol-card">
-                    <div class="tech-icon stack-icon"></div>
-                    <h3>Arquitectura de Datos</h3>
-                    <p>Ingeniería escalable en Azure. Implementamos Medallion Architecture y procesos Delta Load.</p>
+                <div class="kpi-item">
+                    <h4>Real-Time</h4>
+                    <p>Sincronización Activa</p>
+                    <span>Decisiones informadas</span>
+                </div>
+                <div class="kpi-item">
+                    <h4>3D Data</h4>
+                    <p>Estructura Escalable</p>
+                    <span>Preparado para el futuro</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="nosotros" class="main-footer">
+    <footer class="footer" style="text-align: center;">
         <div class="container">
-            <h2>¿Listo para transformar tu gestión con IA?</h2>
+            <h2>¿Listo para revolucionar tu gestión con IA?</h2>
             <a href="mailto:info@querytech.com.ar" class="btn-footer">Hablar con un experto</a>
             <div class="footer-bottom">
                 <p>© 2026 QueryTECH. Buenos Aires, Argentina.</p>
@@ -96,29 +136,73 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        particlesJS("data-cluster-container", {
-            "particles": {
-                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#0078D4" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.4, "random": true },
-                "size": { "value": 3, "random": true },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#0078D4",
-                    "opacity": 0.2,
-                    "width": 1
+        // CONFIGURACIÓN DINÁMICA DE PARTICLESJS
+        let pJS_instance = null;
+        function initParticles(color) {
+            particlesJS("data-cluster-container", {
+                "particles": {
+                    "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": color },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.4, "random": true },
+                    "size": { "value": 3, "random": true },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": color,
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": { "enable": true, "speed": 1.2, "direction": "none", "random": true, "out_mode": "out" }
                 },
-                "move": { "enable": true, "speed": 1.2, "direction": "none", "random": true, "out_mode": "out" }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "resize": true },
-                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } } }
-            },
-            "retina_detect": true
-        });
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": { "enable": true, "mode": "grab" },
+                        "onclick": { "enable": true, "mode": "push" },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } },
+                        "push": { "particles_nb": 4 }
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+
+        // LÓGICA DE INTERCAMBIO DE TEMA
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-btn');
+            
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                btn.innerHTML = '<i class="fa-solid fa-moon"></i> DARK';
+                initParticles("#0078D4"); // Partículas azules para modo claro
+            } else {
+                body.classList.add('dark-theme');
+                btn.innerHTML = '<i class="fa-solid fa-sun"></i> LIGHT';
+                initParticles("#38BDF8"); // Partículas celestes brillantes para modo oscuro
+            }
+        }
+
+        // RELOJ DINÁMICO DE PRECISIÓN UTC-3
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('es-AR', { hour12: false });
+            const day = now.getDate();
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            const monthStr = months[now.getMonth()];
+            const year = now.getFullYear();
+
+            document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${monthStr} ${year}`;
+        }
+
+        // Inicialización
+        initParticles("#0078D4");
+        updateClock();
+        setInterval(updateClock, 1000);
     </script>
 </body>
 </html>
