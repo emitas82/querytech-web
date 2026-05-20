@@ -219,3 +219,291 @@
         <div style="width: 40px; height: 40px; border: 4px solid #1e293b; border-top-color: #38bdf8; border-radius: 50%; animation: spin 1s linear infinite;"></div>
         <p style="letter-spacing: 1px; font-size: 13px; color: var(--text-muted); margin-top: 15px;">CONECTANDO AL SERVIDOR...</p>
     </div>
+
+    <div id="view-authenticated">
+        
+        <div class="top-status-bar">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn">
+                <i class="fa-solid fa-sun"></i> LIGHT
+            </button>
+            <div class="top-status-text">
+                <span class="site-tag">querytech.com.ar</span>
+                <span id="live-clock" style="color: #6366f1;">UTC-3 --:--:-- -- --- ----</span>
+            </div>
+            <div class="top-status-right">
+                <span class="live-dot"></span> LIVE
+            </div>
+        </div>
+
+        <header class="dashboard-header">
+            <div class="logo-container">
+                <img src="/img/logo-querytech.png" alt="QueryTECH Logo">
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="text-align: right;">
+                    <div style="font-size: 12px; color: var(--text-slate);">Panel Privado</div>
+                    <div id="user-email" style="font-weight: 600; color: var(--text-dark); font-size: 14px;"></div>
+                </div>
+                <button class="btn-logout" onclick="window.client.logout({logoutParams:{returnTo:'https://querytech.com.ar/'}})">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="kpi-container">
+            <div class="kpi-card">
+                <div class="kpi-label">Cartera Total (ARS)</div>
+                <div class="kpi-value" id="total-cartera">$ 0,00</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Rendimiento Promedio</div>
+                <div class="kpi-value up" id="total-yield">+0.00%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Activos en Cartera</div>
+                <div class="kpi-value" id="total-activos">0</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Estado del Mercado</div>
+                <div class="kpi-value" id="market-status" style="color: #10b981; font-size: 16px; margin-top: 14px;">
+                    <i class="fa-solid fa-circle" style="font-size: 10px; vertical-align: middle; margin-right: 5px;"></i> ACTUALIZANDO...
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Estatus de Inversiones (En vivo)</h2>
+            <table id="investments-table">
+                <thead>
+                    <tr>
+                        <th class="text-cell" onclick="sortData('ticker')">Activo <i class="fa-solid fa-sort"></i></th>
+                        <th class="text-cell" onclick="sortData('tipo')">Tipo <i class="fa-solid fa-sort"></i></th>
+                        <th class="text-cell" onclick="sortData('inv')">Inv <i class="fa-solid fa-sort"></i></th>
+                        <th class="text-cell" onclick="sortData('broker')">Broker <i class="fa-solid fa-sort"></i></th>
+                        <th class="numeric-cell" onclick="sortData('qty')">Cantidad <i class="fa-solid fa-sort"></i></th>
+                        <th class="numeric-cell" onclick="sortData('price')">Último precio <i class="fa-solid fa-sort"></i></th>
+                        <th class="numeric-cell" onclick="sortData('change')">Variación <i class="fa-solid fa-sort"></i></th>
+                        <th class="numeric-cell" onclick="sortData('avgPrice')">Precio promedio <i class="fa-solid fa-sort"></i></th>
+                        <th class="numeric-cell" onclick="sortData('yield')">Rendimiento <i class="fa-solid fa-sort"></i></th>
+                        <th class="numeric-cell" onclick="sortData('monto')">Monto <i class="fa-solid fa-sort"></i></th>
+                        <th class="numeric-cell" onclick="sortData('valorizado')">Valorizado (ARS) <i class="fa-solid fa-sort"></i></th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.18/auth0-spa-js.production.js"></script>
+    
+    <script>
+        const formatMoney = (num) => '$ ' + num.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const formatPercent = (num) => num.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+
+        // LÓGICA DE INTERCAMBIO DE TEMA
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-btn');
+            
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                btn.innerHTML = '<i class="fa-solid fa-sun"></i> LIGHT';
+            } else {
+                body.classList.add('light-theme');
+                btn.innerHTML = '<i class="fa-solid fa-moon"></i> DARK';
+            }
+        }
+
+        // RELOJ DINÁMICO UTC-3
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('es-AR', { hour12: false });
+            const day = now.getDate();
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            const monthStr = months[now.getMonth()];
+            const year = now.getFullYear();
+
+            document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${monthStr} ${year}`;
+        }
+
+        let initialData = [
+            { ticker: 'AAPL', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 74, change: 0.720, price: 22210, avgPrice: 13275, yield: 67.30, monto: 661190 },
+            { ticker: 'AMZN', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 1420, change: -1.740, price: 2672.5, avgPrice: 1599.28, yield: 67.10, monto: 1523971.50 },
+            { ticker: 'DIA', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 26, change: 0.160, price: 36940, avgPrice: 22460, yield: 64.47, monto: 376480 },
+            { ticker: 'GLD', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 54, change: -0.800, price: 12340, avgPrice: 7220, yield: 70.91, monto: 276480 },
+            { ticker: 'LOMA', tipo: 'ACCION', inv: 'F', broker: 'IOL', qty: 277, change: -2.850, price: 3150, avgPrice: 1496.93, yield: 110.43, monto: 457901 },
+            { ticker: 'MELI', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 81, change: 1.380, price: 19810, avgPrice: 19327.07, yield: 2.49, monto: 39117.59 },
+            { ticker: 'META', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 26, change: -0.740, price: 37520, avgPrice: 35793.85, yield: 4.82, monto: 44880 },
+            { ticker: 'MSFT', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 129, change: -0.660, price: 20810, avgPrice: 20290.16, yield: 2.56, monto: 67060 },
+            { ticker: 'NU', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 263, change: 1.200, price: 9235, avgPrice: 9050, yield: 2.04, monto: 48655 },
+            { ticker: 'WMT', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 74, change: 1.640, price: 11150, avgPrice: 6110, yield: 82.48, monto: 372960 },
+            { ticker: 'XLE', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 12, change: 1.510, price: 45560, avgPrice: 24250, yield: 87.87, monto: 255720 }
+        ];
+
+        let currentSortColumn = '';
+        let sortAscending = true;
+
+        function sortData(column) {
+            if (currentSortColumn === column) {
+                sortAscending = !sortAscending;
+            } else {
+                currentSortColumn = column;
+                sortAscending = true;
+            }
+
+            document.querySelectorAll('th').forEach(th => {
+                th.classList.remove('active-sort');
+                const icon = th.querySelector('i');
+                if(icon) icon.className = 'fa-solid fa-sort';
+            });
+
+            const activeTh = document.querySelector(`th[onclick="sortData('${column}')"]`);
+            if(activeTh) {
+                activeTh.classList.add('active-sort');
+                const activeIcon = activeTh.querySelector('i');
+                activeIcon.className = sortAscending ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+            }
+
+            initialData.sort((a, b) => {
+                let valA = column === 'valorizado' ? a.qty * a.price : a[column];
+                let valB = column === 'valorizado' ? b.qty * b.price : b[column];
+
+                if (typeof valA === 'string') {
+                    return sortAscending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else {
+                    return sortAscending ? valA - valB : valB - valA;
+                }
+            });
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            let totalGeneral = 0;
+            let totalYieldSum = 0;
+
+            initialData.forEach((item) => {
+                const valorizado = item.qty * item.price;
+                totalGeneral += valorizado;
+                totalYieldSum += item.yield;
+                
+                const row = document.createElement('tr');
+                row.id = `row-${item.ticker}`;
+                row.innerHTML = `
+                    <td class="text-cell ticker-cell">${item.ticker}</td>
+                    <td class="text-cell tipo-cell">${item.tipo}</td>
+                    <td class="text-cell" style="color: var(--text-muted);">${item.inv}</td>
+                    <td class="text-cell" style="color: var(--text-muted);">${item.broker}</td>
+                    <td class="numeric-cell">${item.qty.toLocaleString('es-AR')}</td>
+                    <td class="numeric-cell price-cell">${formatMoney(item.price)}</td>
+                    <td class="numeric-cell change-cell ${item.change >= 0 ? 'up' : 'down'}">${item.change > 0 ? '+' : ''}${formatPercent(item.change)}</td>
+                    <td class="numeric-cell" style="color: var(--text-muted);">${formatMoney(item.avgPrice)}</td>
+                    <td class="numeric-cell">${formatPercent(item.yield)}</td>
+                    <td class="numeric-cell" style="color: var(--text-muted);">${formatMoney(item.monto)}</td>
+                    <td class="numeric-cell val-cell">${formatMoney(valorizado)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('total-cartera').innerText = formatMoney(totalGeneral);
+            document.getElementById('total-activos').innerText = initialData.length;
+            const avgYield = totalYieldSum / initialData.length;
+            
+            const yieldElement = document.getElementById('total-yield');
+            yieldElement.innerText = `${avgYield > 0 ? '+' : ''}${avgYield.toFixed(2)}%`;
+            yieldElement.className = `kpi-value ${avgYield >= 0 ? 'up' : 'down'}`;
+        }
+
+        async function fetchLivePrices() {
+            try {
+                const symbols = initialData.map(item => item.ticker + '.BA').join(',');
+                const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`;
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                
+                const response = await fetch(proxyUrl);
+                const data = await response.json();
+
+                if (data.quoteResponse && data.quoteResponse.result) {
+                    let currentTotal = 0;
+
+                    data.quoteResponse.result.forEach(quote => {
+                        const baseTicker = quote.symbol.replace('.BA', '');
+                        const item = initialData.find(i => i.ticker === baseTicker);
+
+                        if (item) {
+                            const oldPrice = item.price;
+                            item.price = quote.regularMarketPrice;
+                            item.change = quote.regularMarketChangePercent;
+
+                            const valorizado = item.qty * item.price;
+                            currentTotal += valorizado;
+
+                            const cell = document.querySelector(`#row-${item.ticker} .price-cell`);
+                            if(cell) {
+                                cell.innerText = formatMoney(item.price);
+                                cell.className = item.price > oldPrice ? 'numeric-cell price-cell updated-up' : 
+                                                item.price < oldPrice ? 'numeric-cell price-cell updated-down' : 'numeric-cell price-cell';
+                                
+                                const valCell = document.querySelector(`#row-${item.ticker} .val-cell`);
+                                if(valCell) valCell.innerText = formatMoney(valorizado);
+                                
+                                const changeCell = document.querySelector(`#row-${item.ticker} .change-cell`);
+                                if(changeCell) {
+                                    changeCell.innerText = `${item.change > 0 ? '+' : ''}${formatPercent(item.change)}`;
+                                    changeCell.className = `numeric-cell change-cell ${item.change >= 0 ? 'up' : 'down'}`;
+                                }
+                            }
+                        }
+                    });
+                    
+                    document.getElementById('total-cartera').innerText = formatMoney(currentTotal);
+                    document.getElementById('market-status').innerHTML = '<i class="fa-solid fa-circle" style="font-size: 10px; vertical-align: middle; margin-right: 5px;"></i> SINCRONIZADO';
+                }
+            } catch (error) {
+                console.error("Error al obtener datos en vivo:", error);
+                document.getElementById('market-status').innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; vertical-align: middle; margin-right: 5px; color: #ef4444;"></i> MODO OFFLINE';
+                document.getElementById('market-status').style.color = '#ef4444';
+            }
+        }
+
+        (async () => {
+            try {
+                window.client = await auth0.createAuth0Client({
+                    domain: 'dev-fe0qtxoxfoluapbs.us.auth0.com',
+                    clientId: 'vZj4AjcJW4kyWDBGCB2dH61ZGbr2z3Cr',
+                    authorizationParams: { redirect_uri: 'https://querytech.com.ar/dashboard.html' },
+                });
+
+                if (location.search.includes("code=") && location.search.includes("state=")) {
+                    await window.client.handleRedirectCallback();
+                    history.replaceState({}, "", location.pathname);
+                }
+
+                if (await window.client.isAuthenticated()) {
+                    const user = await window.client.getUser();
+                    document.getElementById("user-email").textContent = user.email;
+                    
+                    document.getElementById("view-loading").style.display = "none";
+                    document.getElementById("view-authenticated").style.display = "block";
+                    
+                    updateClock();
+                    setInterval(updateClock, 1000);
+
+                    renderTable();
+                    fetchLivePrices();
+                    setInterval(fetchLivePrices, 60000); 
+                } else {
+                    await window.client.loginWithRedirect();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        })();
+    </script>
+    <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+</body>
+</html>
