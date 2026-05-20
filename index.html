@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* INYECTAMOS LAS VARIABLES INTERNAMENTE PARA NO ROMPER TU STYLE.CSS */
+        /* VARIABLES DE TEMA */
         :root {
             --bg-topbar: #f1f5f9;
             --border-theme: #e2e8f0;
@@ -29,7 +29,7 @@
             --text-theme-main: #f8fafc;
         }
 
-        /* APLICACIÓN DE CAMBIOS DE COLOR GLOBALES EN MODO OSCURO */
+        /* CAMBIOS VISUALES MODO OSCURO */
         body.dark-theme {
             background-color: var(--white);
             color: var(--dark);
@@ -57,8 +57,13 @@
         body.dark-theme .sol-card h3 {
             color: #f8fafc;
         }
+        
+        /* SOLUCIÓN LOGO INVISIBLE */
+        body.dark-theme .logo-img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+        }
 
-        /* BARRA SUPERIOR PROFESIONAL ORIENTADA A LA DERECHA */
+        /* BARRA SUPERIOR STATUS */
         .top-status-bar {
             width: 100%;
             background-color: var(--bg-topbar);
@@ -89,7 +94,6 @@
             box-shadow: 0 0 8px #10b981;
         }
 
-        /* BOTÓN SWITCH COMPACTO Y ESTILIZADO */
         .theme-toggle-btn {
             background: transparent;
             border: 1px solid var(--text-theme-muted);
@@ -107,6 +111,77 @@
         .theme-toggle-btn:hover {
             color: var(--text-theme-main);
             border-color: var(--text-theme-main);
+        }
+
+        /* GRILLA ADAPTABLE PARA 4 COLUMNAS DE COMPETENCIA */
+        .sol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .sol-card {
+            transition: all 0.3s ease;
+        }
+        .sol-card .icon-box-new {
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 120, 212, 0.06);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0078D4;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        body.dark-theme .sol-card .icon-box-new {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38BDF8;
+        }
+        .sol-card:hover .icon-box-new {
+            background: #0078D4;
+            color: #ffffff;
+        }
+        body.dark-theme .sol-card:hover .icon-box-new {
+            background: #38BDF8;
+            color: #070B14;
+        }
+
+        /* INTERFAZ DE SELECTOR DE IDIOMA */
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            color: var(--text-theme-muted);
+            transition: color 0.2s, opacity 0.2s;
+            opacity: 0.6;
+            text-decoration: none;
+        }
+        .lang-option:hover, .lang-option.active {
+            opacity: 1;
+            color: var(--brand);
+        }
+        .flag-icon {
+            width: 18px;
+            height: 14px;
+            border-radius: 2px;
+            object-fit: cover;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        .lang-divider {
+            color: var(--border-theme);
+            font-weight: 300;
         }
     </style>
 </head>
@@ -133,9 +208,27 @@
                 <img src="img/logo-querytech.png" alt="QueryTECH" class="logo-img">
             </a>
             <ul class="nav-links">
-                <li><a href="#soluciones">Soluciones</a></li>
-                <li><a href="#impacto">Impacto</a></li>
-                <li><a href="mailto:info@querytech.com.ar" class="btn-nav">Contáctanos</a></li>
+                <li><a href="#soluciones" data-tr="nav-sol">Soluciones</a></li>
+                <li><a href="#impacto" data-tr="nav-imp">Impacto</a></li>
+                
+                <li class="lang-selector">
+                    <a href="#" class="lang-option active" onclick="changeLang('es', event)">
+                        <svg class="flag-icon" viewBox="0 0 3 2"><rect width="3" height="2" fill="#c60b1e"/><rect width="3" height="1" y=".5" fill="#ffc400"/></svg>
+                        <span>ES</span>
+                    </a>
+                    <span class="lang-divider">|</span>
+                    <a href="#" class="lang-option" onclick="changeLang('en', event)">
+                        <svg class="flag-icon" viewBox="0 0 60 30"><clipPath id="a"><path d="M0 0v30h60V0z"/></clipPath><g clip-path="url(#a)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+                        <span>EN</span>
+                    </a>
+                    <span class="lang-divider">|</span>
+                    <a href="#" class="lang-option" onclick="changeLang('pt', event)">
+                        <svg class="flag-icon" viewBox="0 0 600 400"><rect width="600" height="400" fill="#006600"/><path d="M0 0v400h240V0z" fill="#ff0000"/><circle cx="240" cy="200" r="80" fill="#ffff00"/><circle cx="240" cy="200" r="50" fill="#002277"/><path d="M190 200a50 50 0 0 1 100 0z" fill="#ffffff"/></svg>
+                        <span>PT</span>
+                    </a>
+                </li>
+                
+                <li><a href="mailto:info@querytech.com.ar" class="btn-nav" data-tr="nav-btn">Contáctanos</a></li>
             </ul>
         </div>
     </nav>
@@ -143,11 +236,11 @@
     <header class="hero">
         <div class="container">
             <div class="hero-content">
-                <span class="badge-new">Tu Partner de IA & Datos</span>
-                <h1>Transformamos datos con <br><span class="gradient-text">Inteligencia Artificial</span></h1>
-                <p>Expertos en optimizar la retención y el éxito operativo mediante Machine Learning y arquitecturas modernas en Azure.</p>
+                <span class="badge-new" data-tr="hero-badge">Tu Partner de IA & Datos</span>
+                <h1 id="hero-title">Transformamos datos con <br><span class="gradient-text">Inteligencia Artificial</span></h1>
+                <p id="hero-desc">Expertos en optimizar la retención académica y el éxito operativo mediante Machine Learning y arquitecturas modernas en Azure.</p>
                 <div class="hero-btns">
-                    <a href="#soluciones" class="btn-main">Conocer las soluciones</a>
+                    <a href="#soluciones" class="btn-main" data-tr="hero-btn">Conocer las soluciones</a>
                 </div>
             </div>
         </div>
@@ -159,17 +252,17 @@
                 <div class="stat-item">
                     <div class="stat-icon-wrapper"><i class="fas fa-university fa-fw stat-icon"></i></div>
                     <strong>+15</strong> 
-                    <span>Instituciones confían en nosotros</span>
+                    <span data-tr="stat-1">Instituciones confían en nosotros</span>
                 </div>
                 <div class="stat-item">
                     <div class="stat-icon-wrapper"><i class="fas fa-brain fa-fw stat-icon"></i></div>
                     <strong>+20</strong> 
-                    <span>Modelos Predictivos que anticipan tendencias</span>
+                    <span data-tr="stat-2">Modelos Predictivos desarrollados</span>
                 </div>
                 <div class="stat-item">
                     <div class="stat-icon-wrapper"><i class="fas fa-cloud fa-fw stat-icon"></i></div>
                     <strong>Multi-Cloud</strong> 
-                    <span>Arquitectura escalable en AZURE y AWS</span>
+                    <span data-tr="stat-3">Arquitectura escalable en Azure y AWS</span>
                 </div>
             </div>
         </div>
@@ -177,23 +270,32 @@
 
     <section id="soluciones" class="solutions">
         <div class="container">
-            <div class="section-tag">Nuestras Soluciones</div>
-            <h2>IA diseñada para el impacto real</h2>
+            <div class="section-tag" data-tr="sol-tag">Nuestras Soluciones</div>
+            <h2 id="sol-main-title">IA y Arquitectura Core para el Impacto Real</h2>
+            
             <div class="sol-grid">
                 <div class="sol-card">
-                    <div class="tech-icon funnel-icon"></div>
-                    <h3>Agente Comercial Inteligente</h3>
-                    <p>Potenciamos tu funnel comercial. Nuestra IA prioriza leads con mayor probabilidad real de inscripción.</p>
+                    <div class="icon-box-new"><i class="fa-solid fa-chart-pie"></i></div>
+                    <h3 data-tr="card1-t">Data Analytics & BI</h3>
+                    <p data-tr="card1-d">Modelamos e integramos analítica avanzada y dashboards inteligentes adaptados al negocio. Convertimos datos complejos en conocimiento accionable y reportes automatizados en tiempo real para acelerar la toma de decisiones estratégicas.</p>
                 </div>
+
                 <div class="sol-card">
-                    <div class="tech-icon trend-icon"></div>
-                    <h3>Predictor de Permanencia</h3>
-                    <p>Machine Learning que identifica scores de riesgo de deserción temprana antes de que sucedan.</p>
+                    <div class="icon-box-new"><i class="fa-solid fa-database"></i></div>
+                    <h3 data-tr="card2-t">Data Engineering</h3>
+                    <p data-tr="card2-d">Diseñamos e implementamos arquitecturas invisibles pero robustas de Modern Data Warehouse y Data Lakehouse bajo Medallion Architecture (Bronze, Silver, Gold). Estructuramos pipelines automáticos optimizados para cargas masivas Delta Loads.</p>
                 </div>
+
                 <div class="sol-card">
-                    <div class="tech-icon stack-icon"></div>
-                    <h3>Arquitectura de Datos</h3>
-                    <p>Ingeniería escalable en Azure. Implementamos Medallion Architecture y procesos Delta Load.</p>
+                    <div class="icon-box-new"><i class="fa-solid fa-brain"></i></div>
+                    <h3 data-tr="card3-t">Data Science</h3>
+                    <p data-tr="card3-d">Desarrollamos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a generar ventajas competitivas sostenibles. Especialistas en scoring predictivo para retención estudiantil, prevención de bajas y optimización comercial.</p>
+                </div>
+
+                <div class="sol-card">
+                    <div class="icon-box-new"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3 data-tr="card4-t">Data Governance</h3>
+                    <p data-tr="card4-d">Establecemos marcos sólidos de gobernanza para convertir la información en un activo estratégico confiable, auditable y seguro. Creamos catálogos de metadatos, linaje de datos y políticas de seguridad/control de acceso.</p>
                 </div>
             </div>
         </div>
@@ -201,8 +303,8 @@
 
     <footer id="nosotros" class="main-footer">
         <div class="container">
-            <h2>¿Listo para transformar tu gestión con IA?</h2>
-            <a href="mailto:info@querytech.com.ar" class="btn-footer">Hablar con un experto</a>
+            <h2 data-tr="foot-title">¿Listo para transformar tu gestión con IA?</h2>
+            <a href="mailto:info@querytech.com.ar" class="btn-footer" data-tr="foot-btn">Hablar con un experto</a>
             <div class="footer-bottom">
                 <p>© 2026 QueryTECH. Buenos Aires, Argentina.</p>
             </div>
@@ -213,12 +315,75 @@
     <script>
         let pJS_instance = null;
 
-        function initParticles(color, bgRadial) {
-            // Manejamos el fondo dinámicamente sin romper el canvas de partículas
-            const container = document.getElementById('data-cluster-container');
-            if (container) {
-                container.style.background = bgRadial;
+        // DICCIONARIO INTERNO DE TRADUCCIÓN DIRECTA
+        const translations = {
+            es: {
+                "nav-sol": "Soluciones", "nav-imp": "Impacto", "nav-btn": "Contáctanos",
+                "hero-badge": "Tu Partner de IA & Datos",
+                "hero-title": "Transformamos datos con <br><span class='gradient-text'>Inteligencia Artificial</span>",
+                "hero-desc": "Expertos en optimizar la retención académica y el éxito operativo mediante Machine Learning y arquitecturas modernas en Azure.",
+                "hero-btn": "Conocer las soluciones",
+                "stat-1": "Instituciones confían en nosotros", "stat-2": "Modelos Predictivos desarrollados", "stat-3": "Arquitectura escalable en Azure y AWS",
+                "sol-tag": "Nuestras Soluciones", "sol-main-title": "IA y Arquitectura Core para el Impacto Real",
+                "card1-t": "Data Analytics & BI", "card1-d": "Modelamos e integramos analítica avanzada y dashboards inteligentes adaptados al negocio. Convertimos datos complejos en conocimiento accionable y reportes automatizados en tiempo real para acelerar la toma de decisiones estratégicas.",
+                "card2-t": "Data Engineering", "card2-d": "Diseñamos e implementamos arquitecturas invisibles pero robustas de Modern Data Warehouse y Data Lakehouse bajo Medallion Architecture (Bronze, Silver, Gold). Estructuramos pipelines automáticos optimizados para cargas masivas Delta Loads.",
+                "card3-t": "Data Science", "card3-d": "Desarrollamos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a generar ventajas competitivas sostenibles. Especialistas en scoring predictivo para retención estudiantil, prevención de bajas y optimización comercial.",
+                "card4-t": "Data Governance", "card4-d": "Establecemos marcos sólidos de gobernanza para convertir la información en un activo estratégico confiable, auditable y seguro. Creamos catálogos de metadatos, linaje de datos y políticas de seguridad/control de acceso.",
+                "foot-title": "¿Listo para transformar tu gestión con IA?", "foot-btn": "Hablar con un experto"
+            },
+            en: {
+                "nav-sol": "Solutions", "nav-imp": "Impacto", "nav-btn": "Contact Us",
+                "hero-badge": "Your AI & Data Partner",
+                "hero-title": "We transform data with <br><span class='gradient-text'>Artificial Intelligence</span>",
+                "hero-desc": "Experts in optimizing academic retention and operational success through Machine Learning and modern Azure architectures.",
+                "hero-btn": "Explore Solutions",
+                "stat-1": "Institutions trust us", "stat-2": "Predictive Models developed", "stat-3": "Scalable architecture on Azure and AWS",
+                "sol-tag": "Our Solutions", "sol-main-title": "AI & Core Architecture for Real Impact",
+                "card1-t": "Data Analytics & BI", "card1-d": "We model and integrate advanced analytics and intelligent business dashboards. We turn complex data into actionable insights and real-time automated reporting to accelerate strategic decision-making.",
+                "card2-t": "Data Engineering", "card2-d": "We design and deploy robust, invisible architectures for Modern Data Warehouses and Data Lakehouses using Medallion Architecture (Bronze, Silver, Gold). We build automated pipelines optimized for large-scale Delta Loads.",
+                "card3-t": "Data Science", "card3-d": "We develop Machine Learning, Deep Learning, and Generative AI algorithms aimed at building sustainable competitive advantages. Specialists in predictive scoring for student retention and sales funnels.",
+                "card4-t": "Data Governance", "card4-d": "We establish solid governance frameworks to turn your information into a secure, auditable, and reliable strategic asset. We create metadata catalogs, data lineage, and data access control policies.",
+                "foot-title": "Ready to transform your management with AI?", "foot-btn": "Talk to an expert"
+            },
+            pt: {
+                "nav-sol": "Soluções", "nav-imp": "Impacto", "nav-btn": "Contate-nos",
+                "hero-badge": "Seu Parceiro de IA & Dados",
+                "hero-title": "Transformamos dados com <br><span class='gradient-text'>Inteligência Artificial</span>",
+                "hero-desc": "Especialistas em otimizar a retenção acadêmica e o sucesso operacional por meio de Machine Learning e arquiteturas modernas no Azure.",
+                "hero-btn": "Conhecer Soluções",
+                "stat-1": "Instituições confiam em nós", "stat-2": "Modelos Preditivos desenvolvidos", "stat-3": "Arquitetura escalável no Azure e AWS",
+                "sol-tag": "Nossas Soluções", "sol-main-title": "IA e Arquitetura Core para Impacto Real",
+                "card1-t": "Data Analytics & BI", "card1-d": "Modelamos e integramos análise avançada e painéis inteligentes adaptados ao negócio. Convertemos dados complexos em insights acionáveis e relatórios automatizados em tempo real para acelerar decisões estratégicas.",
+                "card2-t": "Data Engineering", "card2-d": "Projetamos e implementamos arquiteturas robustas e invisíveis de Modern Data Warehouse e Data Lakehouse sob Medallion Architecture (Bronze, Silver, Gold). Estruturamos pipelines automáticos otimizados para cargas Delta Loads.",
+                "card3-t": "Data Science", "card3-d": "Desenvolvemos algoritmos de Machine Learning, Deep Learning e IA Generativa orientados a criar vantagens competitivas sustentáveis. Especialistas em score preditivo para retenção de estudantes e funis comerciais.",
+                "card4-t": "Data Governance", "card4-d": "Estabelecemos estruturas sólidas de governança para transformar a informação em um ativo estratégico confiável, auditável e seguro. Criamos catálogos de metadados, linhagem de dados e controle de acesso.",
+                "foot-title": "Pronto para transformar sua gestão con IA?", "foot-btn": "Fale com un especialista"
             }
+        };
+
+        function changeLang(lang, event) {
+            if(event) event.preventDefault();
+            
+            // Alternar estado activo visual en el menú
+            document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
+            const target = event ? event.currentTarget : document.querySelector(`.lang-option[onclick*="${lang}"]`);
+            if(target) target.classList.add('active');
+
+            // Traducir los nodos marcados
+            document.querySelectorAll('[data-tr]').forEach(element => {
+                const key = element.getAttribute('data-tr');
+                if(translations[lang][key]) element.innerText = translations[lang][key];
+            });
+
+            // Tratamientos especiales para h1/p por estructura interna html
+            document.getElementById('hero-title').innerHTML = translations[lang]['hero-title'];
+            document.getElementById('hero-desc').innerText = translations[lang]['hero-desc'];
+            document.getElementById('sol-main-title').innerText = translations[lang]['sol-main-title'];
+        }
+
+        function initParticles(color, bgRadial) {
+            const container = document.getElementById('data-cluster-container');
+            if (container) container.style.background = bgRadial;
 
             particlesJS("data-cluster-container", {
                 "particles": {
@@ -227,13 +392,7 @@
                     "shape": { "type": "circle" },
                     "opacity": { "value": 0.4, "random": true },
                     "size": { "value": 3, "random": true },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": color,
-                        "opacity": 0.2,
-                        "width": 1
-                    },
+                    "line_linked": { "enable": true, "distance": 150, "color": color, "opacity": 0.2, "width": 1 },
                     "move": { "enable": true, "speed": 1.2, "direction": "none", "random": true, "out_mode": "out" }
                 },
                 "interactivity": {
@@ -245,7 +404,6 @@
             });
         }
 
-        // CONTROL DE CAMBIO DE TEMA SIN INTERFERENCIAS
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('theme-btn');
@@ -264,19 +422,15 @@
             }
         }
 
-        // RELOJ DIGITAL EN VIVO
         function updateClock() {
             const now = new Date();
             const timeStr = now.toLocaleTimeString('es-AR', { hour12: false });
             const day = now.getDate();
             const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-            const monthStr = months[now.getMonth()];
-            const year = now.getFullYear();
-
-            document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${monthStr} ${year}`;
+            return document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${months[now.getMonth()]} ${now.getFullYear()}`;
         }
 
-        // Inicialización limpia
+        // Inicialización
         initParticles("#0078D4", "radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%)");
         updateClock();
         setInterval(updateClock, 1000);
