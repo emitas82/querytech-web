@@ -19,15 +19,53 @@
         }
 
         #view-loading { height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; background: #070B14; }
-        #view-authenticated { display: none; padding: 20px; }
+        #view-authenticated { display: none; }
 
+        /* NUEVA BARRA DE ESTADO SUPERIOR (ESTILO RENDIMIENTOS.CO) */
+        .top-status-bar {
+            width: 100%;
+            background-color: #04070d;
+            border-bottom: 1px solid #141b2b;
+            padding: 8px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: #4b5563; /* Gris sutil de base */
+        }
+        .top-status-left {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .top-status-left .site-tag {
+            color: #8994a6;
+            font-weight: 500;
+        }
+        .top-status-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #8994a6;
+        }
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        /* HEADER DEL DASHBOARD (AJUSTADO) */
         .dashboard-header {
             max-width: 1500px;
             margin: 0 auto 30px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 20px;
             border-bottom: 1px solid #1e293b;
         }
         .logo-container img {
@@ -35,12 +73,14 @@
             filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3));
         }
 
+        /* CARD Y GRILLA CONFIG */
         .kpi-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             max-width: 1500px;
             margin: 0 auto 40px auto;
+            padding: 0 20px;
         }
         .kpi-card {
             background: #111827;
@@ -121,6 +161,16 @@
 
     <div id="view-authenticated">
         
+        <div class="top-status-bar">
+            <div class="top-status-left">
+                <span class="site-tag">querytech*.com.ar // tty</span>
+                <span id="live-clock" style="color: #6366f1;">UTC-3 --:--:-- -- --- ----</span>
+            </div>
+            <div class="top-status-right">
+                <span class="live-dot"></span> LIVE
+            </div>
+        </div>
+
         <header class="dashboard-header">
             <div class="logo-container">
                 <img src="/img/logo-querytech.png" alt="QueryTECH Logo">
@@ -187,6 +237,22 @@
     <script>
         const formatMoney = (num) => '$ ' + num.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const formatPercent = (num) => num.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+
+        // RELOJ DINÁMICO DE ALTA PRECISIÓN (ESTILO TERMINAL)
+        function updateClock() {
+            const now = new Date();
+            
+            // Formateador de tiempo local (HH:MM:SS)
+            const timeStr = now.toLocaleTimeString('es-AR', { hour12: false });
+            
+            // Componentes de la fecha mapeados al estilo inglés/consola corta de las capturas
+            const day = now.getDate();
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            const monthStr = months[now.getMonth()];
+            const year = now.getFullYear();
+
+            document.getElementById('live-clock').innerText = `UTC-3 ${timeStr} ${day} ${monthStr} ${year}`;
+        }
 
         let initialData = [
             { ticker: 'AAPL', tipo: 'CEDEAR', inv: 'F', broker: 'IOL', qty: 74, change: 0.720, price: 22210, avgPrice: 13275, yield: 67.30, monto: 661190 },
@@ -282,7 +348,6 @@
             try {
                 const symbols = initialData.map(item => item.ticker + '.BA').join(',');
                 const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols}`;
-                
                 const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
                 
                 const response = await fetch(proxyUrl);
@@ -351,6 +416,10 @@
                     document.getElementById("view-loading").style.display = "none";
                     document.getElementById("view-authenticated").style.display = "block";
                     
+                    // Inicializar reloj
+                    updateClock();
+                    setInterval(updateClock, 1000);
+
                     renderTable();
                     fetchLivePrices();
                     setInterval(fetchLivePrices, 60000); 
