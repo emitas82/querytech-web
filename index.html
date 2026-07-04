@@ -526,17 +526,17 @@
     <!-- Chatwoot Support Widget -->
     <script>
       (function(d,t) {
+        var BASE_URL="https://app.chatwoot.com";
         var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src="https://chat.querytech.com.ar/packs/js/sdk.js";
-        g.defer = true;
+        g.src=BASE_URL+"/packs/js/sdk.js";
         g.async = true;
+        s.parentNode.insertBefore(g,s);
         g.onload=function(){
           window.chatwootSDK.run({
-            websiteToken: 'TOKEN_TEMPORAL_CHATWOOT',
-            baseUrl: 'https://chat.querytech.com.ar'
+            websiteToken: 'WeVDgLLuwijjqN4WyuTPLtms',
+            baseUrl: BASE_URL
           })
         }
-        s.parentNode.insertBefore(g,s);
       })(document,"script");
     </script>
 </body>
