@@ -27,7 +27,7 @@
             --text-muted: #94a3b8;
             --white: #070B14;
             --bg-topbar: #04070d;
-            --border-theme: #141b2b;
+            --border-theme: rgba(255, 255, 255, 0.15);
             --text-theme-muted: #94a3b8;
             --text-theme-main: #f8fafc;
             --card-surface: rgba(11, 17, 33, 0.4);
@@ -143,15 +143,14 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border-theme);
-            border-radius: 24px;
+            border-radius: 4px;
             padding: 3rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 40px var(--card-shadow);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
+            transition: all 0.3s ease;
         }
 
         /* ASIGNACIÓN DE ANCHOS ASIMÉTRICOS (ESTILO INTERACTIVO) */
@@ -161,9 +160,8 @@
         .card-wide-2 { grid-column: span 7; }
 
         .sol-modern-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
             border-color: var(--brand);
-            box-shadow: 0 20px 50px var(--neon-glow);
         }
 
         /* ICONOS DE SÚPER ALTA TECNOLOGÍA */

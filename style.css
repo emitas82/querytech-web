@@ -27,7 +27,14 @@ body.dark-theme {
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark); background-color: var(--white); overflow-x: hidden; transition: background-color 0.3s; }
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--dark);
+    background-color: var(--white);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+    overflow-x: hidden;
+    transition: background-color 0.3s;
+}
 
 #data-cluster-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
@@ -66,8 +73,8 @@ body.dark-theme .logo-img { filter: brightness(0) invert(1); }
 .sol-modern-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; width: 100%; }
 .card-wide-1, .card-wide-2 { grid-column: span 7; }
 .card-narrow-1, .card-narrow-2 { grid-column: span 5; }
-.sol-modern-card { background: var(--card-surface); padding: 3rem; border-radius: 24px; border: 1px solid var(--border-theme); backdrop-filter: blur(12px); transition: 0.4s; }
-.sol-modern-card:hover { transform: translateY(-5px); border-color: var(--brand); box-shadow: 0 20px 40px var(--neon-glow); }
+.sol-modern-card { background: var(--card-surface); padding: 3rem; border-radius: 4px; border: 1px solid var(--border-theme); backdrop-filter: blur(12px); transition: all 0.3s ease; }
+.sol-modern-card:hover { transform: translateY(-2px); border-color: var(--brand); }
 .sol-modern-icon { width: 52px; height: 52px; background: rgba(0, 120, 212, 0.06); border: 1px solid rgba(0, 120, 212, 0.15); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: #0078D4; font-size: 1.4rem; }
 .sol-modern-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-theme-main); }
 .sol-modern-card p { font-size: 0.98rem; color: var(--text-muted); line-height: 1.6; }
